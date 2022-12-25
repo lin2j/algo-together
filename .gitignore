@@ -13,3 +13,10 @@
 *.settings
 *.project
 .flattened-pom.xml
+
+/cmake-build-debug
+test
+leetcode/editor/cn/doc
+out/
+.cache
+compile_commands.json
