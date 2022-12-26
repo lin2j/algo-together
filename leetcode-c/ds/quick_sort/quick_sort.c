@@ -34,7 +34,7 @@ static void quick_sort(int *arr, int l, int r)
 
 int main(int argc, char **argv)
 {
-        int arr[10] = {0, 2, 5, 6,1, 5, 9, 4, 3, 1};
+        int arr[10] = {0, 2, 5, 6, 1, 5, 9, 4, 3, 1};
         quick_sort(arr, 0, 9);
         for(int i = 0; i < 10; i++) {
                 printf("%d ", arr[i]);

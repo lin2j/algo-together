@@ -14,7 +14,7 @@
 *.project
 .flattened-pom.xml
 
-/cmake-build-debug
+cmake-build-debug/
 test
 leetcode/editor/cn/doc
 out/
