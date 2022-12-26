@@ -45,37 +45,32 @@
  * 进阶: 如果输入字符串包含 unicode 字符怎么办？你能否调整你的解法来应对这种情况？
  * 
  */
+#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 
 // @lc code=start
 
+int cmp(const void *_a, const void *_b) 
+{
+        char a = *(char *)_a, b = *(char *)_b;
+        return a - b;
+}
+
 /**
- * 使用一个小写字母表记录 s 中每个元素的个数，
- * 然后遍历一次 t 中的元素，遍历到的元素时，对
- * 应的位置减一
- * 如果 s 和 t 中出现的字母相同且次数相同，那么
- * 最终字母表的所有索引位置的个数一定为 0
+ * 将 s 和 t 分别进行排序，如果是字母异位词，
+ * 那么排序后的单词将是相同的
  */
 bool isAnagram(char *s, char *t) 
 {
-        // 使用 char 类型会无法通过测试用例
-        int count_map[26] = {0};
-
-        while(*s != '\0' && *t != '\0') {
-                count_map[*s++ - 'a']++;
-                count_map[*t++ - 'a']--;
-        }
-
-        if (*s != '\0' || *t != '\0')
+        int len_s = strlen(s), len_t = strlen(t);
+        if (len_s != len_t)
                 return false;
 
-        for (int i = 0; i < 26; i++) {
-                if (count_map[i] != 0)
-                        return false;
-        }
+        qsort(s, len_s, sizeof(char), cmp);
+        qsort(t, len_t, sizeof(char), cmp);
 
-        return true;
+        return strcmp(s, t) == 0;
 }
 // @lc code=end
 

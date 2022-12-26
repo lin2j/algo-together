@@ -77,7 +77,8 @@
  * 者插入到 sorted 头部
  */
 void merge(int *nums1, int nums1Size, int m, 
-           int *nums2, int nums2Size, int n){
+           int *nums2, int nums2Size, int n)
+{
         int len = m + n;
         int p = 0, q = 0;
         int sorted[len];

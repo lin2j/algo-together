@@ -77,7 +77,8 @@
  * 到 nums1 的尾部
  */
 void merge(int *nums1, int nums1Size, int m, 
-           int *nums2, int nums2Size, int n){
+           int *nums2, int nums2Size, int n)
+{
         int p = m - 1, q = n - 1;
         int tail = m + n - 1;
         int max;

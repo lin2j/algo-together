@@ -51,22 +51,23 @@
 // @lc code=start
 
 
-static int randomIndex(int l, int r) {
+static int randomIndex(int l, int r)
+{
         srand(time(NULL));
         return rand() % (r - l) + l;
 }
 
 
-static void swap(int *nums, int i, int j) {
+static void swap(int *nums, int i, int j)
+{
         int tmp = nums[i];
         nums[i] = nums[j];
         nums[j] = tmp;
 }
 
-static int partition(int *nums, int l, int r) {
-        if (l > r) {
-                return -1;
-        } 
+static int partition(int *nums, int l, int r) 
+{
+        if (l > r) return -1;
 
         // ac 的关键，不然有些测试用例会超时
         int i = randomIndex(l, r);
@@ -82,14 +83,12 @@ static int partition(int *nums, int l, int r) {
         return l;
 }
 
-static void quick_sort(int *nums, int l, int r) {
-        if (l >= r) {
-                return;
-        }
+static void quick_sort(int *nums, int l, int r)
+{
+        if (l >= r) return;
         int p = partition(nums, l, r);
-        if (p == -1) {
-                return;
-        }
+        if (p == -1) return;
+
         quick_sort(nums, l, p - 1);
         quick_sort(nums, p + 1, r);
 }
@@ -98,13 +97,13 @@ static void quick_sort(int *nums, int l, int r) {
  * 先将数组进行排序，然后在遍历排序后的数组，
  * 如果前后两个元素相同的话，则表示出现重复数字
  */
-bool containsDuplicate(int *nums, int nums_size){
+bool containsDuplicate(int *nums, int nums_size)
+{
         quick_sort(nums, 0, nums_size - 1);
 
         for (int i = 1; i < nums_size; i++) {
-                if (nums[i] == nums[i - 1]) {
+                if (nums[i] == nums[i - 1])
                         return true;
-                }
         }
         return false;
 }

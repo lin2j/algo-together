@@ -57,7 +57,8 @@
  *      2.1 当候选项的次数已经是 0 时，则候选项更换为当前遍历的元素
  *      2.2 当候选项次数不为 0 时，则减一
  */
-int majorityElement(int *nums, int nums_size){
+int majorityElement(int *nums, int nums_size)
+{
         int candidate = nums[0];
         int count = 1;
         for (int i = 1; i < nums_size; i++) {

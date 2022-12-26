@@ -60,7 +60,8 @@ struct hash_table {
  * 1. 如果该元素已经在哈希表中，说明该元素是重复的
  * 2. 如果共元素不在哈希表中，那么将该元素放到哈希表中
  */
-bool containsDuplicate(int *nums, int nums_size){
+bool containsDuplicate(int *nums, int nums_size)
+{
         struct hash_table *set = NULL;
         for (int i = 0; i < nums_size; i++) {
                 struct hash_table *tmp = NULL;
