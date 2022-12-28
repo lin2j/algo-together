@@ -53,25 +53,24 @@
 
 // @lc code=start
 
-int cmp(const void *a, const void *b)
-{
-        return *(char *)a - *(char *)b;
-}
-
 /*
  * 1. 将 s、t 排序
  * 2. 同时遍历 s、t，如果发现两个元素不一样，则返回 t[i]
  * 3. 如果遍历结束了依然没有发现不同元素，则 t[len_s] 为答案
  */
 char findTheDifference(char *s, char *t){
-        int len_s = strlen(s), len_t = strlen(t);
-        qsort(s, len_s, sizeof(char), cmp);
-        qsort(t, len_t, sizeof(char), cmp);
+        int count_map[26] = {0};
+        while(*s != '\0' || *t != '\0') {
+                if (*s != '\0')
+                        count_map[*s++ - 'a']++;
+                count_map[*t++ - 'a']--;
+        }
 
-        for (int i = 0; i < len_s; i++)
-                if (s[i] != t[i]) return t[i];
+        for (int i = 0; i < 26; i++)
+                if (count_map[i] != 0)
+                        return (char)(i + 'a');
 
-        return t[len_s];
+        return '\0';
 }
 // @lc code=end
 
