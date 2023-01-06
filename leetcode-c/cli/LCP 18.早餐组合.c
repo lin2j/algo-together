@@ -1,5 +1,5 @@
 /*
- * @lc app=leetcode.cn id=LCP 18 lang=c
+ * @lc app=leetcode.cn id=LCP18 lang=c
  *
  * [LCP 18] 早餐组合
  *
@@ -10,13 +10,17 @@
  * Likes:    76
  * Dislikes: 0
  * Total Accepted:    23.7K
- * Total Submissions: 78.8K
+ * Total Submissions: 78.9K
  * Testcase Example:  '[10,20,5]\n[5,5,2]\n15'
  *
- * 小扣在秋日市集选择了一家早餐摊位，一维整型数组 `staple` 中记录了每种主食的价格，一维整型数组 `drinks`
- * 中记录了每种饮料的价格。小扣的计划选择一份主食和一款饮料，且花费不超过 `x` 元。请返回小扣共有多少种购买方案。
+ * 小扣在秋日市集选择了一家早餐摊位，一维整型数组 `staple` 中记录了每种
+ * 主食的价格，一维整型数组 `drinks` 中记录了每种饮料的价格。小扣的计划
+ * 选择一份主食和一款饮料，且花费不超过 `x` 元。
+ *
+ * 请返回小扣共有多少种购买方案。
  * 
- * 注意：答案需要以 `1e9 + 7 (1000000007)` 为底取模，如：计算初始结果为：`1000000008`，请返回 `1`
+ * 注意：答案需要以 `1e9 + 7 (1000000007)` 为底取模，如：计算初始结果
+ * 为：`1000000008`，请返回 `1`
  * 
  * **示例 1：**
  * >输入：`staple = [10,20,5], drinks = [5,5,2], x = 15`
@@ -49,13 +53,47 @@
  * **提示：**
  * + `1 
  */
+#include <stdlib.h>
 
 // @lc code=start
+#define MOD 1000000007
 
-
-int breakfastNumber(int* staple, int stapleSize, int* drinks, int drinksSize, int x){
-
+static inline int int_cmp(const void *a, const void *b)
+{
+        return *(int *)a - *(int *)b;
 }
+
+
+int breakfastNumber(int *staple, int staple_size,
+                    int *drinks, int drinks_size, int x){
+        qsort(staple, staple_size, sizeof(int), int_cmp);
+        qsort(drinks, drinks_size, sizeof(int), int_cmp);
+
+        for (int i = 0; i < staple_size; i++)
+                if (staple[i] >= x) {
+                        staple_size = i + 1;
+                        break;
+                }
+
+        for (int i = 0; i < drinks_size; i++)
+                if (drinks[i] >= x) {
+                        drinks[i] = i + 1;
+                        break;
+                }
+
+        int ans = 0;
+        for (int i = 0; i < staple_size; i++) {
+                int d = x - staple[i];
+                for (int j = drinks_size - 1; j >= 0; j--)
+                        if (drinks[j] <= d) {
+                                ans = j + 1;
+                                ans = ans % MOD;
+                        }
+        }
+
+        return ans;
+}
+
 // @lc code=end
 
 
