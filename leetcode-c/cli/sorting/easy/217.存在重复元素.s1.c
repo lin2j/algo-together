@@ -46,7 +46,7 @@
  */
 #include <stdlib.h>
 #include <stdbool.h>
-#include "../include/uthash.h"
+#include "include/uthash.h"
 
 // @lc code=start
 

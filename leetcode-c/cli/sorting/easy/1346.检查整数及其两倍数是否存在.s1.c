@@ -58,7 +58,7 @@
  * 
  */
 
-#include "../include/uthash.h"
+#include "include/uthash.h"
 #include <stdbool.h>
 
 // @lc code=start

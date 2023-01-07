@@ -67,7 +67,7 @@
  */
 #include <math.h>
 #include <stdlib.h>
-#include "../include/uthash.h"
+#include "include/uthash.h"
 
 // @lc code=start
 

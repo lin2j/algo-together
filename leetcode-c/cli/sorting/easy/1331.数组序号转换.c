@@ -54,7 +54,7 @@
  * 
  * 
  */
-#include "../include/uthash.h"
+#include "include/uthash.h"
 #include <stdlib.h>
 
 // @lc code=start
