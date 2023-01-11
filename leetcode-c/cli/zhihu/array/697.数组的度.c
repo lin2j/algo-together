@@ -75,12 +75,12 @@ static void free_hash_map(hash_map *map)
 
 /**
  * 1. 创建计数用的哈希表 map， 遍历数组 nums, 设当前元素为 a
- *   1.1 如果 a 不在哈希表中，则将 a 插入到 map 中，设置 freq 和 start
+ *   1.1 如果 a 不在哈希表中，则将 a 插入到 map 中，设置 freq、start 和 end
  *   1.2 如果 a 在哈希表中，则将 a 的频数加一，更新 end 为当前索引
  * 2. 在 1 的过程中，设置遍历 max_freq, max_num 分别记录最大频数和对应
  *    的数字
  *   2.1 当遇到一个元素的频数与 max_freq 相等时，则需要比较两个元素的最短
- *       连续子数组长度，取长度较小这作为 max_num
+ *       连续子数组长度，取长度较小这者为 max_num
  * 3. nums 遍历结束之后，得到一个能知道最大频数 max_num，从哈希表中取出
  *    改元素的起始和结束位置
  *
