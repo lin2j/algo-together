@@ -90,6 +90,7 @@ bool pq_peek(PriorityQueue queue, int *e) {
                 return false;
         *e = queue->data[0];
 
+
         return true;
 }
 
