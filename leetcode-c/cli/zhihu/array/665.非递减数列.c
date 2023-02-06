@@ -67,10 +67,10 @@
  *
  * 算法过程：
  * 1. 创建变量 n = nums_size - 1, changable 标记 nums[0] 和 nums[1] 的关系
- *   1.1 如果 nums[0] 比 nums[1] 大，则后面不可再修改 changeable 为 false
+ *   1.1 如果 nums[0] 比 nums[1] 大，则后面不可再修改，changeable 为 false
  *
  * 2. 遍历 nums 数组，索引从 1 开始到 n （不包含n）结束
- *   2.1 如果 nums[i] <= nums[i+1]，则满足非递减要求，继续遍历
+ *   2.1 如果 nums[i] ≤ nums[i+1]，则满足非递减要求，继续遍历
  *   2.2 如果 nums[i] > nums[i+1] 则先判断是否还能修改，若不能直接返回false
  *   2.3 如果可以修改则按照上述影响最小的方式进行修改，将 changable 设为 false 
  *

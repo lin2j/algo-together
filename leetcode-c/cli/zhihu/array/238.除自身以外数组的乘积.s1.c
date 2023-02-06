@@ -67,27 +67,28 @@
  *
  * 最终 L[i] * R[i] 即为 answer[i] 
  *
+ * 实际最终结果可以存在 L 上，即可以返回，所以空间复杂度
+ * 主要是数组 R 的占用
+ *
+ * 可以对以上过程做一个优化，通过一个变量去替代数组 R
+ *
  * T(n): O(n)
- * S(n): O(n)
+ * S(n): O(1)
  */
 int * productExceptSelf(int *nums, int nums_size, int *return_size)
 {
         *return_size = nums_size;
         int *L = malloc(sizeof(int) * nums_size);  
-        int *R = malloc(sizeof(int) * nums_size);
 
         L[0] = 1;
         for (int i = 1; i < nums_size; i++)
                 L[i] = L[i - 1] * nums[i - 1];
 
-        R[nums_size - 1] = 1;
-        for (int i = nums_size - 2; i >= 0; i--)
-                R[i] = R[i + 1] * nums[i + 1];
-
-        for (int i = 0; i < nums_size; i++)
-                L[i] *= R[i];
-
-        free(R);
+        int R = 1;
+        for (int i = nums_size - 2; i >= 0; i--) {
+                R = R * nums[i + 1];
+                L[i] *= R;
+        }
 
         return L;
 }

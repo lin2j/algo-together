@@ -64,8 +64,6 @@
  *
  * 需要注意的是，nums[i] 位置的元素可能已经经过 +n 的操作，所以 nums[i] - 1 
  * 需要对 n 取模以保证数组不会越界。
- *
- *
  */
 int* findDisappearedNumbers(int* nums, int nums_size, int* return_size)
 {
