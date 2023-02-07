@@ -50,12 +50,47 @@
  * 
  */
 #include <stdbool.h>
+#include <string.h>
 
 // @lc code=start
-bool detectCapitalUse(char * word)
-{
 
-}
+#define IS_UPPER(c) ((c) >= 'A' && (c) <= 'Z')
+#define IS_LOWWER(c) ((c) >= 'a' && (c) <= 'z')
+
+/*
+ * 如果单词长度为 1，则必定合法
+ *
+ * 如果单词长度超过 2，则
+ * 1. 如果前两个字母均为大写，则后面全部都需要为大写
+ * 2. 如果首字母大写，第二个字母小写，则后面全部都为小写
+ * 3. 如果前两个字母均为小写，则后面全部都需要为小写
+ *
+ * 如果第一个字母为小写，则需额外判断第二个字母是否为小写
+ */
+bool detectCapitalUse(char *word)
+{
+        int len_word = strlen(word);
+        
+        if (len_word == 1)
+                return true;
+
+        if (IS_LOWWER(word[0]) && IS_UPPER(word[1]))
+                return false;
+
+        bool all_upper = IS_UPPER(word[0]) && IS_UPPER(word[1]);
+        bool all_lower = IS_LOWWER(word[0]) && IS_LOWWER(word[1]);
+        all_lower |= IS_UPPER(word[0]) && IS_LOWWER(word[1]);
+
+        if (all_lower) {
+                for (word += 2; *word != '\0'; word++)
+                        if (IS_UPPER(*word)) return false;
+        } else if(all_upper) {
+                for (word += 2; *word != '\0'; word++)
+                        if (IS_LOWWER(*word)) return false;
+        }
+
+        return true;
+} 
 // @lc code=end
 
 
