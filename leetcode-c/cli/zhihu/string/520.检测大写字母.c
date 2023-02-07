@@ -55,7 +55,7 @@
 // @lc code=start
 
 #define IS_UPPER(c) ((c) >= 'A' && (c) <= 'Z')
-#define IS_LOWWER(c) ((c) >= 'a' && (c) <= 'z')
+#define IS_LOWER(c) ((c) >= 'a' && (c) <= 'z')
 
 /*
  * 如果单词长度为 1，则必定合法
@@ -74,19 +74,19 @@ bool detectCapitalUse(char *word)
         if (len_word == 1)
                 return true;
 
-        if (IS_LOWWER(word[0]) && IS_UPPER(word[1]))
+        if (IS_LOWER(word[0]) && IS_UPPER(word[1]))
                 return false;
 
         bool all_upper = IS_UPPER(word[0]) && IS_UPPER(word[1]);
-        bool all_lower = IS_LOWWER(word[0]) && IS_LOWWER(word[1]);
-        all_lower |= IS_UPPER(word[0]) && IS_LOWWER(word[1]);
+        bool all_lower = IS_LOWER(word[0]) && IS_LOWER(word[1]);
+        all_lower |= IS_UPPER(word[0]) && IS_LOWER(word[1]);
 
         if (all_lower) {
                 for (word += 2; *word != '\0'; word++)
                         if (IS_UPPER(*word)) return false;
         } else if(all_upper) {
                 for (word += 2; *word != '\0'; word++)
-                        if (IS_LOWWER(*word)) return false;
+                        if (IS_LOWER(*word)) return false;
         }
 
         return true;
