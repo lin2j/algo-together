@@ -69,7 +69,7 @@ char * longestCommonPrefix(char **strs, int strs_size)
                 int cp = 0;
                 char *s1 = strs[i];
                 char *s2 = strs[i + 1];
-                while(*s1 != '\0' && *s2 != '\0' && *s1 == *s2) {
+                while (*s1 != '\0' && *s2 != '\0' && *s1 == *s2) {
                         cp++;
                         s1++;
                         s2++;

@@ -79,9 +79,9 @@ bool isPalindrome(char *s)
         char *left = s;
         char *right = s + len_s - 1;
 
-        while(left < right) {
-                while(left < right && !VALID(*left)) left++;
-                while(left < right && !VALID(*right)) right--;
+        while (left < right) {
+                while (left < right && !VALID(*left)) left++;
+                while (left < right && !VALID(*right)) right--;
 
                 if (left < right && *left != *right)
                         return false;
