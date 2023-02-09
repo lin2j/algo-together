@@ -48,12 +48,39 @@
  * 
  * 
  */
+#include <string.h>
 
 // @lc code=start
 
+static inline int min(int a, int b)
+{
+        return a > b ? b : a;
+}
 
-char * reverseStr(char *s, int k){
+static void swap(char *a, char *b)
+{
+        char c = *a;
+        *a = *b;
+        *b = c;
+}
 
+static void reverse(char *l, char *r)
+{
+        while (l < r) swap(l++, --r);
+}
+
+/**
+ * 1. 每隔 2k 翻转一次 [i, i + k)
+ * 2. 当剩余的元素个数少于 2k 时，比较 i+k 和 n 的大小，取较小者
+ */
+char * reverseStr(char *s, int k)
+{
+        int n = strlen(s);
+
+        for (int i = 0; i < n; i += 2 * k)
+                reverse(&s[i], &s[min(i + k, n)]);
+
+        return s;
 }
 // @lc code=end
 
