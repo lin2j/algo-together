@@ -69,21 +69,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 // @lc code=start
-
-/*
- * reverse [l, r]
- */
-static void reverse(char *l, char *r)
-{
-        while(l < r) {
-                char c = *l;
-                *l = *r;
-                *r = c;
-
-                l++;
-                r--;
-        }
+//反转字符串函数
+void reverse(char* s, int start, int end) {
+    while (start < end) {
+        char temp = s[start];
+        s[start++] = s[end];
+        s[end--] = temp;
+    }
 }
 
 /*
@@ -94,45 +88,48 @@ static void reverse(char *l, char *r)
  * T(n): O(n)
  * S(n): O(n)
  */
-char * reverseWords(char *s)
-{
-        char *fast = s;
-        char *slow = s;
-
-        // 去掉多余空格 (todo 尚需调整)
-        while(*fast != '\0' && *fast == ' ') fast++;
-        while(*fast != '\0') {
-                if (*fast == ' ' 
-                        && *(fast + 1) != '\0' 
-                        && *(fast + 1) == ' ') {
-                        fast++;
-                        continue;
-                }
-                *slow++ = *fast++;
+char * reverseWords(char * s){
+    // 1. 移除多余空格
+    int len = strlen(s);
+    int fast = 0, slow = 0;
+    // 移除字符串之前的空格
+    while (s[fast] == ' ') {
+        fast++;
+    }
+    // 移除单词之间多余的空格
+    while (fast < len - 1) {
+        if (s[fast] == ' ' && s[fast + 1] == ' ') {
+            fast++;
+        } else {
+            s[slow++] = s[fast++];
         }
-        if (*slow != '\0' && *slow == ' ') slow--;
-        *(slow + 1) = '\0';
+    }
+    // 移除字符串后面的空格
+    if (s[fast] == ' ') {
+        s[slow] = '\0';
+    } else {
+        s[slow++] = s[fast];
+        s[slow] = '\0';
+    }
 
-        // 整体字符串反转
-        char *l = s;
-        char *r = slow;
-        while(l < r) printf("%c", *l++);
-        l = s;
-        reverse(l, r);
+    
+    // 2. 反转整个字符串
+    reverse(s, 0, slow - 1);
 
-        // 反转每个单词
-        r = s;
-        while(*r != '\0') {
-                if (*r == ' ') {
-                        reverse(l, r - 1);
-                        r++;
-                        l = r;
-                        continue;
-                }
-                r++;
+    
+    // 3. 反转每一个单词
+    for (int i = 0; i < slow; i++) {
+        int j = i;
+        while (j < slow && s[j] != ' ') {
+            j++;
         }
-        return s;
+        reverse(s, i, j - 1);
+        i = j;
+    }
+
+    return s;
 }
+
 // @lc code=end
 
 
