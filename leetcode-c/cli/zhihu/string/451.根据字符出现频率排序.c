@@ -82,7 +82,7 @@ static inline int cmp_pair(const void *a, const void *b)
  * 根据排序结果进行字符串构造
  *
  * T(n): O(n + klogk) k 为 s 中不重复的字符，需要 k 个频数进行排序
- * S(n): O( logk) k 为 s 中不重复的字符
+ * S(n): O(n + logk) k 为 s 中不重复的字符
  */
 char * frequencySort(char *s)
 {
