@@ -13,10 +13,11 @@
  * Total Submissions: 111.5K
  * Testcase Example:  '[5,4,3,2,1]'
  *
- * 给你一个长度为 n 的整数数组 score ，其中 score[i] 是第 i 位运动员在比赛中的得分。所有得分都 互不相同 。
+ * 给你一个长度为 n 的整数数组 score ，其中 score[i] 是第 i 位运动员在
+ * 比赛中的得分。所有得分都 互不相同 。
  * 
- * 运动员将根据得分 决定名次 ，其中名次第 1 的运动员得分最高，名次第 2 的运动员得分第 2
- * 高，依此类推。运动员的名次决定了他们的获奖情况：
+ * 运动员将根据得分 决定名次 ，其中名次第 1 的运动员得分最高，名次第 2
+ * 的运动员得分第 2 高，依此类推。运动员的名次决定了他们的获奖情况：
  * 
  * 
  * 名次第 1 的运动员获金牌 "Gold Medal" 。
@@ -56,14 +57,53 @@
  * 
  * 
  */
+#include <stdlib.h>
+#include <stdio.h>
 
 // @lc code=start
 
+typedef struct {
+        int score;
+        int index;
+} pair;
+
+static inline int cmp_pair(const void *a, const void *b)
+{
+        return ((pair *)b)->score - ((pair *)a)->score;
+}
 
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-char ** findRelativeRanks(int* score, int scoreSize, int* returnSize){
+char ** findRelativeRanks(int *score, int score_size, int *return_size)
+{
+
+        pair sort_score[score_size];
+
+        for (int i = 0; i < score_size; i++) {
+                pair p = {.score = score[i], .index = i};
+                sort_score[i] = p;
+        }
+
+        qsort(sort_score, score_size, sizeof(pair), cmp_pair);
+
+        char **result = malloc(sizeof(char *) * score_size);
+        for (int i = 0; i < score_size; i++) {
+                int index = sort_score[i].index;
+                switch(i) {
+                        case 0: result[index] = "Gold Medal"; break;
+                        case 1: result[index] = "Silver Medal"; break;
+                        case 2: result[index] = "Bronze Medal"; break;
+                        default: 
+                                result[index] = malloc(sizeof(char) * 6);
+                                sprintf(result[index], "%d", i + 1);
+                                break;
+                }
+
+        }
+
+        *return_size = score_size;
+        return result;
 
 }
 // @lc code=end
