@@ -51,12 +51,38 @@
  * 
  * 
  */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // @lc code=start
 
+static void parse_complex_number(char *num, int *real, int *image)
+{
+        char *token = strtok(num, "+");
+        *real = atoi(token);
+        token = strtok(NULL, "i");
+        *image = atoi(token);
+}
 
-char * complexNumberMultiply(char * num1, char * num2){
+/* 
+ * (a + bi) * (c + di) = (ac - bd) + (ad + bc)i
+ *
+ */
+char * complexNumberMultiply(char *num1, char *num2)
+{
+        int a = 0, b = 0;
+        int c = 0, d = 0;
 
+        parse_complex_number(num1, &a, &b);
+        parse_complex_number(num2, &c, &d);
+
+        char *result = malloc(sizeof(char) * 20);
+        int real = a * c - b * d;
+        int image = a * d + b * c;
+        snprintf(result, 20, "%d+%di", real, image);
+
+        return result;
 }
 // @lc code=end
 
