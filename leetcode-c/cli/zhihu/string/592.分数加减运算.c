@@ -56,13 +56,70 @@
  * 
  * 
  */
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // @lc code=start
 
+#define MAX_STR_LEN 80
+
+long long gcd(long long a, long long b) 
+{
+        long remainder = a % b;
+        while (remainder != 0) {
+                a = b;
+                b = remainder;
+                remainder = a % b;
+        }
+        return b;
+}
+
+/*
+ * 把分母弄成一样，分子求和，然后再根据
+ * 分子和与分母的最大公约数进行约分
+ */
 char * fractionAddition(char *expression)
 {
+        long long x = 0, y = 1;
+        int idx = 0, n = strlen(expression);
 
+        while(idx < n) {
+                // 读取分子
+                long long x1 = 0;
+                int sign = 1;
+                if (expression[idx] == '-' || expression[idx] == '+') {
+                        sign = expression[idx] == '-' ? -1 : 1;
+                        idx++;
+                }
+                while (idx < n && isdigit(expression[idx])) {
+                        x1 = x1 * 10 + expression[idx] - '0';
+                        idx++;
+                }
+                x1 = x1 * sign;
+                idx++;
 
+                // 读取分母
+                long long y1 = 0;
+                while (idx < n && isdigit(expression[idx])) {
+                        y1 = y1 * 10 + expression[idx] - '0';
+                        idx++;
+                }
+
+                x = x * y1 + x1 * y;
+                y = y * y1;
+        }
+
+        if (x == 0) {
+                return "0/1";
+        }
+
+        long long g = gcd(llabs(x), y);
+        char *result = malloc(sizeof(char) * MAX_STR_LEN);
+        sprintf(result, "%lld/%lld", x / g, y / g);
+
+        return result;
 }
 // @lc code=end
 
