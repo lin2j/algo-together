@@ -53,12 +53,68 @@
  * 
  * 
  */
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
 // @lc code=start
 
+char * solveEquation(char *equation)
+{
+        int x_val = 0, right_val = 0;
+        bool left = true;
 
-char * solveEquation(char * equation){
+        int idx = 0, n = strlen(equation);
+        while (idx < n) {
+                if (equation[idx] == '=') {
+                        left = false;
+                        idx++;
+                }
 
+                int sign = 1;
+                if (equation[idx] == '-' || equation[idx] == '+') {
+                        sign = equation[idx] == '-' ? -1 : 1;
+                        idx++;
+                }
+
+                if (equation[idx] == 'x') {
+                        sign = left ? sign : -1 * sign;
+                        x_val = x_val + sign;
+                        idx++;
+                        continue;
+                }
+
+                int a = 0;
+                while (idx < n && isdigit(equation[idx])) {
+                        a = a * 10 + equation[idx] - '0';
+                        idx++;
+                }
+                a = sign * a;
+
+                if (equation[idx] == 'x') {
+                        a = left ? a : -1 * a;
+                        x_val = x_val + a;
+                        idx++;
+                        continue;
+                }
+
+                a = left ? -1 * a : a;
+                right_val = right_val + a;
+        }
+
+        if (x_val == 0 && right_val == 0)
+                return "Infinite solutions";
+
+        if (x_val == 0 || right_val % x_val != 0) 
+                return "No solution";
+
+
+        char *result = malloc(sizeof(char) * 20);
+        sprintf(result, "x=%d", right_val / x_val);
+
+        return result;
 }
 // @lc code=end
 
