@@ -54,10 +54,47 @@
 
 // @lc code=start
 
+/*
+ * 构造神奇字符串，并在构造的过程中统计 1 的个数
+ *
+ * 当 n 小于 4 时，122 中有 1 个 1
+ * 1. 从 122 开始，构造后面的字符
+ * 2. 设置 i 指向下一组的大小，j 需要构建的组的位置，
+ *    且用 j 之前的数字来决定下一组数字是 1 还是 2
+ *    若 s[j - 1] = 1，则需要构建一组2
+ * 3. 则初始 i = 2，j = 3，以此为例，则下一组的大小是 2，
+ *    需要构建的数字是 s[3 - 1] = 3 - 2 = 1
+ *
+ */
+int magicalString(int n)
+{
+        if (n < 4)
+                return 1;
 
-int magicalString(int n){
+        int ans = 1;
+        char s[n + 1];
+        s[0] = '1'; 
+        s[1] = '2'; 
+        s[2] = '2';
+        int i = 2, j = 3;
 
+        while (j < n) {
+                int size = s[i] - '0';
+                // 若 s[j - 1] = 1，则需要构建一组2
+                int num = 3 - (s[j - 1] - '0');
+                while (size > 0 && j < n) {
+                        s[j] = num + '0';
+                        if (num == 1)
+                                ans++;
+                        j++;
+                        size--;
+                }
+                i++;
+        }
+
+        return ans;
 }
+
 // @lc code=end
 
 

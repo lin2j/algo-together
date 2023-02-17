@@ -74,9 +74,69 @@
  * 
  */
 
-// @lc code=start
-int compareVersion(char * version1, char * version2){
+#include <stdio.h>
+#include <string.h>
 
+// @lc code=start
+
+#define END(c) ((c) == '.' || (c) == '\0')
+
+// 返回 part 到 '.' 或者 '\0' 的长度
+static int get_number(char *part, int *num)
+{
+        int n = 0, k = 0;
+        while (!END(part[k])) {
+                // 先减 '0' 很重要
+                // 假设 n = 214748364 对于 n * 10 + part[k] - '0' 来说
+                // 在计算时，会先计算 n * 10 + part[k]，这里会溢出
+                // 因为 part[k] 实际是一个字符，实际数值是大于 7 的
+                // 因此 n * 10 + part[k] 超过 32 整型的表达范围，溢出        
+                n = n * 10 - '0' + part[k] ;
+                k++;
+        }
+        *num = n;
+        return k;
+}
+
+int compareVersion(char *version1, char *version2)
+{
+        int n1 = strlen(version1);
+        int n2 = strlen(version2);
+
+        int i1 = 0, i2 = 0;
+        int v1 = 0, v2 = 0;
+        while (i1 < n1 && i2 < n2) {
+                int l1 = get_number(version1 + i1, &v1);
+                int l2 = get_number(version2 + i2, &v2);
+
+                if (v1 > v2)
+                        return 1;
+                else if (v1 < v2)
+                        return -1;
+
+                i1 += l1 + 1;
+                i2 += l2 + 1;
+        }
+
+        while (i1 < n1) {
+                int l1 = get_number(version1 + i1, &v1);
+
+                if (v1 > 0) 
+                        return 1;
+                i1 += l1 + 1;
+
+        }
+
+        while (i2 < n2) {
+                int l2 = get_number(version2 + i2, &v2);
+
+                if (v2 > 0) 
+                        return -1;
+
+                i2 += l2 + 1;
+        }
+
+        return 0;
 }
 // @lc code=end
 
