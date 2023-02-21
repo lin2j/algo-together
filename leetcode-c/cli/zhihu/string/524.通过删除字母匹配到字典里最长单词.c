@@ -48,10 +48,11 @@
  */
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 // @lc code=start
 
-bool is_subsequence(char *s, char *t, int *l)
+bool is_subsequence(char *s, char *t, int *len)
 {
         int i = 0, j = 0;
         while (s[i] != '\0' && t[j] != '\0') {
@@ -63,21 +64,25 @@ bool is_subsequence(char *s, char *t, int *l)
                 j++;
         }
 
-        *l = i;
+        *len = i;
         return s[i] == '\0';
 
 }
 
-char * findLongestWord(char * s, char ** dictionary, int dictionary_size)
+char * findLongestWord(char *s, char **dictionary, int dictionary_size)
 {
-        int max = -1;
+        int max_len = -1;
         char *result = "";
 
         for (int i = 0; i < dictionary_size; i++) {
                 int l = 0;
-                bool sub = is_subsequence(dictionary[i], s, &l);
-                if (sub && l > max) {
-                        max = l;
+                char *t = dictionary[i];
+                bool is_sub = is_subsequence(t, s, &l);
+
+                if (!is_sub) continue;
+                // 返回长度最长且字母序最小的字符串
+                if (l > max_len || (l == max_len && strcmp(t, result) < 0)) {
+                        max_len = l;
                         result = dictionary[i];
                 }
         }
