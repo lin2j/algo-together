@@ -53,13 +53,46 @@
  * 
  * 
  */
+#include <stdlib.h>
+#include <string.h>
 
 // @lc code=start
 
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-char * addStrings(char * num1, char * num2)
+static void reverse(char *s, int len)
 {
+    for (int i = 0; i < len / 2; i++) {
+        char t = s[i];
+        s[i] = s[len - i - 1], s[len - i - 1] = t;
+    }
+}
 
+
+char * addStrings(char *num1, char *num2)
+{
+        int len_1 = strlen(num1);
+        int len_2 = strlen(num2);
+
+        reverse(num1, len_1);
+        reverse(num2, len_2);
+
+        int c = 0;
+        int n = MAX(len_1, len_2), len = 0;
+        char *result = (malloc(sizeof(char) * (n + 2)));
+        for (int i = 0, j = 0; i < n; i++, j++) {
+                if (i < len_1) c += num1[i] - '0';
+                if (j < len_2) c += num2[j] - '0';
+                result[len++] = c % 10 + '0';
+                c /= 10;
+        }
+
+        if (c == 1)
+                result[len++] = '1';
+        result[len] = '\0';
+        reverse(result, len);
+
+        return result;
 }
 // @lc code=end
 
