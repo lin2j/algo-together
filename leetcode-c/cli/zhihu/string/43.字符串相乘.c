@@ -48,31 +48,48 @@
 
 // @lc code=start
 
-#define MAX_STR_LEN 40000 
+static inline int max(int a, int b)
+{
+        return a > b ? a: b;
+}
+
+// reverse [l, r]
+static void reverse(char *l, char *r)
+{
+        char c;
+        while (l < r) {
+                c = *l;
+                *l = *r;
+                *r = c;
+                l++;
+                r--;
+        }
+}
+
+static char * add(char *num1, char *num2)
+{
+        int i = strlen(num1) - 1;
+        int j = strlen(num2) - 2;
+
+        char *res = malloc(sizeof(char) * (max(i, j) + 2));
+        int k = 0, c = 0;
+        while (i >= 0 && j >= 0) {
+                if (i >= 0) c += num1[i] - '0';
+                if (j >= 0) c += num2[j] - '0';
+                res[k++] = c % 10;
+                c /= 10;
+                i--;
+                j--;
+        }
+        res[k] = '\0';
+        reverse(res, res + k - 1);
+
+        return res;
+}
 
 char * multiply(char *num1, char *num2)
 {
-        int len_1 = strlen(num1);
-        int len_2 = strlen(num2);
 
-        int k = 1;
-        long long mul = 0;
-        for (int i = len_1 - 1; i >= 0; i--) {
-                long long m = 0, c = 1;
-                int a = num1[i] - '0';
-                for (int j = len_2 - 1; j >= 0; j--) {
-                        int b = num2[j] - '0';
-                        m = m + a * b * c;
-                        c *= 10;
-                }
-                mul = mul + m * k;
-                k *= 10;
-        }
-
-        char *result = malloc(sizeof(char) * MAX_STR_LEN);
-        sprintf(result, "%lld", mul);
-
-        return result;
 }
 // @lc code=end
 
