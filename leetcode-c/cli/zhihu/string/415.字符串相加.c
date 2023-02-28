@@ -60,12 +60,16 @@
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-static void reverse(char *s, int len)
+static void reverse(char *l, char *r)
 {
-    for (int i = 0; i < len / 2; i++) {
-        char t = s[i];
-        s[i] = s[len - i - 1], s[len - i - 1] = t;
-    }
+        char c;
+        while (l < r) {
+                c = *l;
+                *l = *r;
+                *r = c;
+                l++;
+                r--;
+        }
 }
 
 
@@ -74,8 +78,8 @@ char * addStrings(char *num1, char *num2)
         int len_1 = strlen(num1);
         int len_2 = strlen(num2);
 
-        reverse(num1, len_1);
-        reverse(num2, len_2);
+        reverse(num1, num1 + len_1 - 1);
+        reverse(num2, num2 + len_2 - 1);
 
         int c = 0;
         int n = MAX(len_1, len_2), len = 0;
@@ -87,10 +91,10 @@ char * addStrings(char *num1, char *num2)
                 c /= 10;
         }
 
-        if (c == 1)
-                result[len++] = '1';
+        if (c == 1) result[len++] = '1';
         result[len] = '\0';
-        reverse(result, len);
+
+        reverse(result, result + len - 1);
 
         return result;
 }
