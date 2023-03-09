@@ -100,39 +100,6 @@ char * convert(char *s, int num_rows)
         if (r == 1 || r >= n)
                 return s;
 
-        int t = 2 * r - 2;
-        int c = (n / t + 1) * (r - 1);
-        char **mat = malloc(sizeof(char *) * r);
-        for (int i = 0; i < r; i++) {
-                mat[i] = malloc(sizeof(char) * c);
-                memset(mat[i], 0, sizeof(char) * c);
-        }
-
-        int x = 0, y = 0;
-        for (int i = 0; s[i] != '\0'; i++) {
-                mat[x][y] = s[i];
-                if (i % t < r - 1) {
-                        // 向下移动
-                        x++;
-                } else {
-                        // 向上移动
-                        x--;
-                        y++;
-                }
-        }
-
-        int pos = 0;
-        for (int i = 0; i < r; i++) {
-                for (int j = 0; j < c; j++) {
-                        if (mat[i][j] != 0)
-                                s[pos++] = mat[i][j];
-                }
-                free(mat[i]);
-        }
-
-        free(mat);
-
-        return s;
 }
 // @lc code=end
 
