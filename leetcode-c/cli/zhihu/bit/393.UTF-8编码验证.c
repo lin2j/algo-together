@@ -76,48 +76,46 @@
 
 // @lc code=start
 
-const uint32_t MASK1 = 0x80;
-const uint32_t MASK2 = 0x90;
-const uint32_t ONE   = 0x00;
-const uint32_t TWO   = 0xC0;
-const uint32_t THREE = 0xE0;
-const uint32_t FOUR  = 0xF0;
+static const int MASK1 = 1 << 7;
+static const int MASK2 = (1 << 7) + (1 << 6);
 
-int ds;
-
-bool is_valid(int *data, int len) {
-        for (int i = 0; i < len && i < ds; i++) {
-                if ((((data[i] >> 7) & 1) == 1) && (((data[i] >> 6) & 1) == 0))
-                        continue;
-                return false;
-        }
-        return true;
+bool isValid(int num) {
+    return (num & MASK2) == MASK1;
 }
 
-bool validUtf8(int *data, int data_size)
-{
-        ds = data_size;
-        for (int i = 0; i < data_size;) {
-                int d = data[i];
-                if ((d & FOUR) == FOUR) {
-                        if (!is_valid(data + i + 1, 3))
-                                return false;
-                        i += 4;
-                } else if ((d & THREE) == THREE) {
-                        if (!is_valid(data + i + 1, 2))
-                                return false;
-                        i += 3;
-                } else if ((d & TWO) == TWO) {
-                        if (!is_valid(data + i + 1, 1))
-                                return false;
-                        i += 2;
-                } else if ((d & ONE) == ONE) {
-                        i += 1;
-                } else {
-                        return false;
-                }
+int getBytes(int num) {
+    if ((num & MASK1) == 0) {
+        return 1;
+    }
+    int n = 0;
+    int mask = MASK1;
+    while ((num & mask) != 0) {
+        n++;
+        if (n > 4) {
+            return -1;
         }
-        return true;
+        mask >>= 1;
+    }
+    return n >= 2 ? n : -1;
+}
+
+bool validUtf8(int* data, int dataSize){
+    int m = dataSize;
+    int index = 0;
+    while (index < m) {
+        int num = data[index];
+        int n = getBytes(num);
+        if (n < 0 || index + n > m) {
+            return false;
+        }
+        for (int i = 1; i < n; i++) {
+            if (!isValid(data[index + i])) {
+                return false;
+            }
+        }
+        index += n;
+    }
+    return true;
 }
 // @lc code=end
 
