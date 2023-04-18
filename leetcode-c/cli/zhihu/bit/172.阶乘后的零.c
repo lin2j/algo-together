@@ -65,6 +65,7 @@
 int trailingZeroes(int n)
 {
         int c = 0;
+        // n! 中质因子 5 的个数等于 [1,n] 的每个数的质因子 5 的个数之和
         for (int i = 5; i <= n; i += 5)
                 for (int x = i; x % 5 == 0; x /= 5)
                         c++;
