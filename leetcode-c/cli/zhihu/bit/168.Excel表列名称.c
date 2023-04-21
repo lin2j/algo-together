@@ -75,8 +75,8 @@ char * convertToTitle(int column_number)
 
         int n = column_number;
         while (n != 0) {
-                int m = n % 26;
-                result[k++] = (m == 0 ? 25 : m - 1) + 'A';
+                n--;
+                result[k++] = n % 26 + 'A';
                 n /= 26;
         }
 
