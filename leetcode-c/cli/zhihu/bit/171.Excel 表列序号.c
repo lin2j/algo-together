@@ -64,8 +64,18 @@
 // @lc code=start
 
 
-int titleToNumber(char * columnTitle){
+int titleToNumber(char *column_title)
+{
+        int result = 0;
 
+        char *p = column_title;
+        while (*p != '\0') {
+                int u = *p - 'A' + 1;
+                result = result * 26 + u;
+                p++;
+        }
+
+        return result;
 }
 // @lc code=end
 
