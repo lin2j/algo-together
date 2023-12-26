@@ -44,7 +44,6 @@
  */
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
 
 // @lc code=start
 
