@@ -41,6 +41,8 @@
  * 
  */
 
+#include <stdlib.h>
+
 // @lc code=start
 
 
@@ -49,6 +51,7 @@
  */
 char ** generateParenthesis(int n, int* returnSize){
 
+    return NULL;
 }
 // @lc code=end
 
